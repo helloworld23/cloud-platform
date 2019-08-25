@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.tenant.mapper.TenantMapper">
+  <resultMap id="BaseResultMap" type="com.github.wxiaoqi.security.tenant.entity.Tenant">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="registration_date" jdbcType="TIMESTAMP" property="registrationDate" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="alipay" jdbcType="VARCHAR" property="alipay" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
+    <association property="node" javaType="com.github.wxiaoqi.security.tenant.entity.Node">
+      <result column="nodeId" jdbcType="VARCHAR" property="id"/>
+      <result column="ip" jdbcType="VARCHAR" property="ip"/>
+      <result column="remote_port" jdbcType="VARCHAR" property="remotePort"/>
+      <result column="local_port" jdbcType="VARCHAR" property="localPort"/>
+      <result column="password" jdbcType="VARCHAR" property="password"/>
+      <result column="encrypt_method" jdbcType="VARCHAR" property="encryptMethod"/>
+      <result column="protocol" jdbcType="VARCHAR" property="protocol"/>
+      <result column="obfs" jdbcType="VARCHAR" property="obfs"/>
+      <result column="flag" jdbcType="VARCHAR" property="flag"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, email, contact, `password`, registration_date, qq, wechat, alipay, login_name, 
+    del_flag
+  </sql>
+
+  <sql id="nodeJoin">
+        LEFT JOIN node n ON n.id = un.node_id and n.del_flag=0
+    </sql>
+
+  <sql id="tenantNodeJoin">
+        LEFT JOIN tenant_node un ON a.id = un.user_id and un.del_flag=0
+    </sql>
+
+  <select id="findList" resultMap="BaseResultMap">
+    SELECT
+    a.*,n.id as nodeId,n.ip,n.remote_port,n.flag,un.id as userNodeId
+    FROM
+    tenant a
+    <include refid="tenantNodeJoin"/>
+    <include refid="nodeJoin"/>
+    where
+    1=1 and a.del_flag=0
+    <if test="id != '' and id != null">
+      and a.id =#{id}
+    </if>
+    <if test="name != '' and name != null">
+      and a.name like '%${name}%'
+    </if>
+    <if test="email != '' and email != null">
+      and a.email like '%${email}%'
+    </if>
+    <if test="delFlag != null">
+      and a.del_flag = #{delFlag}
+    </if>
+    <if test="node != null">
+      <if test="node.ip != '' and node.ip != null">
+        and n.ip like "%"#{node.ip}"%"
+      </if>
+      <if test="node.id != '' and node.id != null">
+        and n.id=#{node.id}
+      </if>
+      <if test="node.remotePort != '' and node.remotePort != null">
+        and n.remote_port = #{node.remotePort}
+      </if>
+      <if test="node.flag != null">
+        and n.flag = #{node.flag}
+      </if>
+    </if>
+    <if test="beginDate != null and endDate != null ">AND registration_date
+      between #{beginDate} and #{endDate}
+    </if>
+    order by a.registration_date desc
+  </select>
+
+</mapper>

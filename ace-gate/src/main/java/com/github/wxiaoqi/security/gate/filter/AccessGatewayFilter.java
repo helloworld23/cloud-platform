@@ -112,11 +112,11 @@ public class AccessGatewayFilter implements GlobalFilter {
         Stream<PermissionInfo> stream = getPermissionIfs(requestUri, method, permissionIfs);
         List<PermissionInfo> result = stream.collect(Collectors.toList());
         PermissionInfo[] permissions = result.toArray(new PermissionInfo[]{});
-        if (permissions.length > 0) {
+      /*  if (permissions.length > 0) {
             if (checkUserPermission(permissions, serverWebExchange, user)) {
                 return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Forbidden!Does not has Permission!"));
             }
-        }
+        }*/
         // 申请客户端密钥头
         mutate.header(serviceAuthConfig.getTokenHeader(), serviceAuthUtil.getClientToken());
         ServerHttpRequest build = mutate.build();

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.tenant.mapper.NodeMapper">
+  <resultMap id="BaseResultMap" type="com.github.wxiaoqi.security.tenant.entity.Node">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="remote_port" jdbcType="VARCHAR" property="remotePort" />
+    <result column="local_port" jdbcType="VARCHAR" property="localPort" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="encrypt_method" jdbcType="VARCHAR" property="encryptMethod" />
+    <result column="protocol" jdbcType="VARCHAR" property="protocol" />
+    <result column="obfs" jdbcType="VARCHAR" property="obfs" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="flag" jdbcType="TINYINT" property="flag" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="contract_date" jdbcType="TIMESTAMP" property="contractDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ip, remote_port, local_port, `password`, encrypt_method, protocol, obfs, `status`, 
+    flag, createDate, del_flag, contract_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from node
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.github.wxiaoqi.security.tenant.entity.Node" useGeneratedKeys="true">
+    insert into node (ip, remote_port, local_port, 
+      `password`, encrypt_method, protocol, 
+      obfs, `status`, flag, 
+      createDate, del_flag, contract_date
+      )
+    values (#{ip,jdbcType=VARCHAR}, #{remotePort,jdbcType=VARCHAR}, #{localPort,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{encryptMethod,jdbcType=VARCHAR}, #{protocol,jdbcType=VARCHAR}, 
+      #{obfs,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{flag,jdbcType=TINYINT}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}, #{contractDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.github.wxiaoqi.security.tenant.entity.Node" useGeneratedKeys="true">
+    insert into node
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="remotePort != null">
+        remote_port,
+      </if>
+      <if test="localPort != null">
+        local_port,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="encryptMethod != null">
+        encrypt_method,
+      </if>
+      <if test="protocol != null">
+        protocol,
+      </if>
+      <if test="obfs != null">
+        obfs,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="contractDate != null">
+        contract_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePort != null">
+        #{remotePort,jdbcType=VARCHAR},
+      </if>
+      <if test="localPort != null">
+        #{localPort,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptMethod != null">
+        #{encryptMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null">
+        #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="obfs != null">
+        #{obfs,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="contractDate != null">
+        #{contractDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.wxiaoqi.security.tenant.entity.Node">
+    update node
+    <set>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePort != null">
+        remote_port = #{remotePort,jdbcType=VARCHAR},
+      </if>
+      <if test="localPort != null">
+        local_port = #{localPort,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptMethod != null">
+        encrypt_method = #{encryptMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null">
+        protocol = #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="obfs != null">
+        obfs = #{obfs,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="contractDate != null">
+        contract_date = #{contractDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.wxiaoqi.security.tenant.entity.Node">
+    update node
+    set ip = #{ip,jdbcType=VARCHAR},
+      remote_port = #{remotePort,jdbcType=VARCHAR},
+      local_port = #{localPort,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      encrypt_method = #{encryptMethod,jdbcType=VARCHAR},
+      protocol = #{protocol,jdbcType=VARCHAR},
+      obfs = #{obfs,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      flag = #{flag,jdbcType=TINYINT},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      contract_date = #{contractDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

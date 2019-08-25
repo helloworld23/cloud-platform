@@ -56,6 +56,14 @@ spring:
           - Path=/api/admin/**
           filters:
           - StripPrefix=2
+        - id: ace-tenant
+          uri: lb://ace-tenant
+          order: 8896
+          predicates:
+          - Path=/api/tenant/**
+          filters:
+          - StripPrefix=2
+
      nacos:
         discovery:
           server-addr: 127.0.0.1:8848

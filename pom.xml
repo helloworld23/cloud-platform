@@ -36,6 +36,7 @@
         <module>ace-sidecar</module>
         <module>ace-control</module>
         <module>ace-modules</module>
+        <module>ace-biz</module>
     </modules>
     <packaging>pom</packaging>
     <developers>
